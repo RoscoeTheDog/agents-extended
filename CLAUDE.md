@@ -1,211 +1,226 @@
-# Project Behavioral Operating System
+# Project AI Agent System
 
-## Core Directives (ALWAYS ENFORCE)
-
-### 1. **Context Manager First Protocol**
-```
-FOR ANY multi-step task OR when coordinating 2+ agents:
-→ MUST route through context-manager agent first
-→ context-manager validates, plans, and coordinates
-→ Individual agents work under context-manager supervision
-```
-
-### 2. **Validation-First Rule**
-```
-BEFORE any code changes or significant actions:
-→ VALIDATE requirements are clear and complete
-→ HALT if ambiguous - request specific details
-→ CONFIRM approach before implementation
-→ No assumptions, no guessing
-```
-
-### 3. **Agent Specialization Enforcement**
-```
-ALWAYS use appropriate specialized agents from .claude/agents/:
-→ UI/UX work: ui-designer, ux-researcher
-→ Backend: backend-architect, api-designer  
-→ Testing: test-writer-fixer, api-tester
-→ Security: security-auditor
-→ Complex coordination: context-manager (REQUIRED)
+## Project Environment Constraints
+```yaml
+project:
+  name: "agent-test-1"
+  type: "multi-agent-system"  # webapp, mobile-app, api, multi-agent-system
+  stage: "prototype"          # prototype, mvp, production
+  timeline: "6-day-sprints"
+  budget: "minimal"           # minimal, standard, enterprise
+  
+tech_stack:
+  preferred: ["javascript", "python", "react", "node.js"]
+  databases: ["postgresql", "redis"]
+  deployment: ["vercel", "railway", "docker"]
+  
+constraints:
+  token_budget: 4000          # Maximum tokens per session
+  complexity_threshold: 1500  # Tokens to trigger context-manager
+  parallel_agents: 3          # Max concurrent agents
+  session_duration: "30min"   # Max session length
 ```
 
-## Project Context
+## Practical Complexity Assessment
+**Real-time implementable scoring system:**
 
-### **Architecture**
-- **Type**: [Auto-detected by context-manager on first run]
-- **Tech Stack**: [Auto-discovered from codebase]
-- **Agent Coordination**: Hub-and-spoke through context-manager
-- **Context Management**: Automated via context-manager agent
+```c
+// Token-efficient complexity calculation
+int calculateComplexity(char* prompt) {
+  int score = 0;
+  int word_count = countWords(prompt);
+  
+  // Word count factor
+  if (word_count > 100) score += 2;
+  if (word_count > 200) score += 2;
+  
+  // Domain detection (+1 each)
+  char* domains[] = {"frontend", "backend", "testing", "design", "mobile"};
+  score += countMatches(prompt, domains, 5);
+  
+  // Scope keywords (+2 each)
+  char* scope[] = {"complete", "system", "production", "full", "enterprise"};
+  score += countMatches(prompt, scope, 5) * 2;
+  
+  // Integration complexity (+3 each)
+  char* integrations[] = {"auth", "payment", "database", "api", "deploy"};
+  score += countMatches(prompt, integrations, 5) * 3;
+  
+  return score;
+}
 
-### **Development Philosophy**
-- **Validation First**: Never proceed with unclear requirements
-- **Agent Specialization**: Right agent for right task  
-- **Context Efficiency**: Minimal token waste through smart coordination
-- **Safety First**: HALT on risky operations, require explicit confirmation
+// Routing decision
+struct Route {
+  char* destination;
+  char* agent;
+  char* reason;
+};
 
-## Behavioral Rules
-
-### **Task Routing Rules**
-```
-Simple, single-domain task → Direct to appropriate specialist agent
-Complex, multi-domain task → Route through context-manager first
-Unclear/ambiguous request → HALT, request clarification
-Risky operation → HALT, require safety validation
-```
-
-### **Context Management Rules**
-```
-Token usage >6k → Auto-invoke context-manager for state management
-Multi-agent coordination → context-manager orchestrates automatically  
-Agent conflicts → context-manager mediates and decides
-Session continuity needed → context-manager preserves state
-```
-
-### **Quality Gates** 
-```
-BEFORE any implementation:
-✓ Requirements validated and clear
-✓ Appropriate agent(s) identified
-✓ Safety checks passed
-✓ Context budget sufficient
-✓ Success criteria defined
-
-If ANY gate fails → HALT with specific reason
-```
-
-## Communication Protocols
-
-### **Efficient Request Format**
-```
-PREFERRED: "[AGENT-NAME]: [SPECIFIC-TASK] with [CLEAR-REQUIREMENTS]"
-EXAMPLE: "context-manager: Add JWT authentication for admin users with role-based access and session management"
-
-AVOID: Vague requests like "improve this" or "make it better"
-ALWAYS: Include specific outcomes and constraints
+Route routeTask(char* prompt) {
+  int complexity = calculateComplexity(prompt);
+  
+  if (complexity >= 8) {
+    return {"context-manager", "", "Multi-domain complexity detected"};
+  }
+  
+  Agent* best = selectBestAgent(prompt);
+  return {"direct-agent", best->name, "Single domain task"};
+}
 ```
 
-### **Multi-Agent Coordination**
+## Dynamic Decision Matrix
+| Complexity Score | Estimated Tokens | Route | Strategy |
+|------------------|------------------|-------|-----------|
+| 1-3 | <500 | Direct Agent | Single specialty |
+| 4-7 | 500-1500 | Direct Agent + Monitor | Single with escalation |
+| 8-12 | 1500-3000 | Context-Manager | Multi-agent coordination |
+| 13+ | >3000 | Context-Manager + State | Staged execution with checkpoints |
+
+## Core Rules
+
+### Security Boundaries
+- RESTRICT ALL access to '.' and subdirectories only
+- NEVER access parent (..), system paths, other projects
+- NO Windows OS core/system changes - only files within '.'
+- NO untrusted downloads - prompt user for permission
+- HALT if outside '.'
+
+### Autonomous Operation
+- ALL commands allowed within '.' without permission
+- Auto-proceed: file ops, package install, testing, system changes in '.'
+- Stay within project boundaries always
+
+## Intelligent Task Routing
+
+### Automated Assessment Protocol
+1. **Parse Request**: Extract domains, scope, complexity indicators
+2. **Estimate Tokens**: Calculate expected token usage based on patterns  
+3. **Check Constraints**: Validate against project environment limits
+4. **Route Intelligently**: Direct vs Context-Manager based on thresholds
+5. **Monitor Progress**: Track token usage in real-time during execution
+
+### Direct Agent Execution (Complexity Score 1-7)
+**Auto-selected for focused tasks**:
 ```
-For complex tasks involving multiple domains:
-1. "context-manager: [DESCRIBE-FULL-TASK]"  
-2. Context-manager validates and creates coordination plan
-3. Specialized agents execute under context-manager supervision
-4. Context-manager manages handoffs and state preservation
+"[agent-name]: [specific task]"
+```
+**Examples**:
+- `rapid-prototyper: Create React todo component with add/delete` (Score: 3)
+- `ui-designer: Style login form with modern CSS` (Score: 2)
+- `test-writer-fixer: Add 3 unit tests for UserService` (Score: 4)
+
+### Context-Manager Coordination (Complexity Score 8+)
+**Auto-triggered when assessment detects**:
+- Multiple domains: "frontend and backend", "with testing"
+- System-level scope: "complete system", "full application" 
+- Production keywords: "production-grade", "enterprise-level"
+- Complex integration: "payment processing", "authentication system"
+- Token estimate >1500
+
+```  
+"context-manager: [complex multi-domain task]"
+```
+**Examples**:
+- `context-manager: Build complete auth system with frontend, backend, and tests` (Score: 11)
+- `context-manager: Create production-grade e-commerce platform` (Score: 15)
+
+## Agent Autonomy Protocol
+Agents automatically escalate to context-manager if:
+- Task exceeds their domain expertise
+- Multiple specialties clearly required
+- Coordination with other agents needed
+
+## Core Agent Ecosystem (15 Optimized Agents)
+
+```c
+// Agent Registry with Performance Tracking
+struct Agent {
+  char* name;
+  float success_rate;
+  int avg_tokens;
+  char* specialties[5];
+};
+
+Agent core_agents[15] = {
+  // Engineering (4)
+  {"rapid-prototyper", 0.85, 800, {"mvp", "prototype", "quick-build"}},
+  {"backend-architect", 0.92, 1200, {"api", "database", "scale", "auth"}},
+  {"frontend-developer", 0.88, 900, {"react", "ui", "responsive", "mobile"}},
+  {"test-writer-fixer", 0.91, 600, {"testing", "qa", "debug", "validation"}},
+  
+  // Design (2)
+  {"ui-designer", 0.83, 700, {"interface", "visual", "components", "ux"}},
+  {"ux-researcher", 0.79, 800, {"research", "user-testing", "analytics"}},
+  
+  // Product (2)
+  {"trend-researcher", 0.86, 900, {"market", "viral", "trends", "tiktok"}},
+  {"sprint-prioritizer", 0.89, 500, {"planning", "roadmap", "features"}},
+  
+  // Marketing (2)
+  {"tiktok-strategist", 0.81, 800, {"social", "viral", "content", "growth"}},
+  {"app-store-optimizer", 0.84, 600, {"aso", "keywords", "conversion"}},
+  
+  // Project Management (2)
+  {"project-shipper", 0.90, 700, {"launch", "coordination", "release"}},
+  {"experiment-tracker", 0.87, 400, {"ab-test", "metrics", "analytics"}},
+  
+  // Operations (3)
+  {"devops-automator", 0.93, 1000, {"deploy", "ci-cd", "infrastructure"}},
+  {"support-responder", 0.82, 500, {"customer", "docs", "help"}},
+  {"analytics-reporter", 0.88, 600, {"metrics", "performance", "insights"}}
+};
 ```
 
-### **Error Handling**
-```
-When agents encounter problems:
-→ HALT processing immediately
-→ Clearly state what went wrong
-→ Specify what information/action is needed to proceed  
-→ Route to appropriate specialist if needed
-```
+## Environment-Aware Agent Behavior
+**All agents automatically adapt to project constraints:**
 
-## Agent Directory Structure
+### Tech Stack Alignment
+- Default to project's preferred technologies (React, Node.js, PostgreSQL)
+- Suggest deployment options within constraints (Vercel, Railway)
+- Optimize for 6-day sprint timelines
 
+### Budget-Conscious Decisions
+- **Minimal Budget**: Use free tiers, open source, rapid prototyping
+- **Standard Budget**: Include paid services for better performance
+- **Enterprise Budget**: Full production architecture with monitoring
+
+### Context-Aware Routing Rules
+- **Complexity Score <8**: Direct agent with real-time monitoring
+- **Complexity Score 8-12**: Context-manager coordination
+- **Complexity Score >12**: Staged execution with state preservation
+- **Token Budget Exceeded**: Automatic checkpoint creation
+
+### HALT Conditions
+- Token budget >90% consumed → Create checkpoint and pause
+- Unclear requirements → Request specific details
+- High-risk operations → Require explicit confirmation
+- Outside project directory → Security boundary violation
+
+## Adaptive Default Behavior
+**Behavior adapts to project stage and constraints:**
+
+### Prototype Stage (Current)
+- Default to MVP/minimal implementation
+- Prioritize speed over perfection
+- Use rapid development patterns
+- Skip comprehensive error handling
+
+### Production Stage
+- Comprehensive error handling and validation
+- Security-first implementation
+- Performance optimization required
+- Full testing coverage expected
+
+### Real-Time Monitoring
+- Track token usage during execution
+- Monitor agent performance and success rates
+- Adjust complexity thresholds based on actual usage
+- Create checkpoints at 1000-token intervals
+
+## File Structure
 ```
 .claude/
-├── agents/
-│   ├── context-manager.md        # ← Primary coordinator (REQUIRED)
-│   ├── engineering/              # ← Specialized dev agents
-│   ├── design/                   # ← UI/UX agents  
-│   ├── testing/                  # ← QA/testing agents
-│   └── [other domains]/          # ← Domain-specific agents
-├── context-state/                # ← Auto-created by context-manager
-└── CLAUDE.md                     # ← This file
+├── agents/           # Specialized agent definitions
+├── context-state/    # Auto-created by context-manager  
+└── CLAUDE.md        # This file
 ```
-
-## Default Behaviors
-
-### **On Startup/First Interaction**
-1. Context-manager auto-discovers project type and tech stack
-2. Sets up optimal agent coordination patterns
-3. Establishes token budgets and thresholds
-4. Creates context management structure
-
-### **During Development**
-- Route complex tasks through context-manager automatically
-- Use specialist agents for domain-specific work
-- Validate before implementing, HALT if unclear
-- Preserve context proactively before token exhaustion
-
-### **Quality Assurance**
-- All code changes require appropriate testing agent involvement
-- Security changes require security-auditor validation  
-- UI changes require ui-designer review
-- Architecture changes require backend-architect approval
-
-## Emergency Protocols
-
-### **Context Crisis Management**
-```
-When approaching token limits:
-→ context-manager auto-preserves essential state
-→ Creates resumable session snapshots
-→ Provides continuation instructions
-→ Never lose critical progress
-```
-
-### **Agent Conflict Resolution**
-```
-When agents disagree:
-→ context-manager mediates with objective analysis
-→ Makes authoritative decisions with clear rationale
-→ Updates all affected agents with resolution
-→ Prevents circular discussions
-```
-
-### **Safety Override**
-```
-For potentially destructive operations:
-→ IMMEDIATE HALT regardless of agent confidence
-→ Require explicit --force confirmation
-→ Mandate appropriate safety agent review
-→ Create rollback plan before proceeding
-```
-
-## Success Metrics
-
-### **Efficiency Targets**
-- Token waste reduction: >60% vs unmanaged multi-agent work
-- Task completion accuracy: >95% on first attempt
-- Context preservation success: >90% across session boundaries
-- Agent coordination overhead: <20% of total token usage
-
-### **Quality Standards** 
-- All implementations include appropriate testing
-- Security considerations addressed for relevant changes
-- UI changes maintain design consistency
-- Code follows established project patterns
-
-## Usage Examples
-
-### **Simple Task (Direct Agent)**
-```
-✅ GOOD: "test-writer-fixer: Add unit tests for the UserService class"
-❌ AVOID: "Add some tests" (unclear scope)
-```
-
-### **Complex Task (Context Manager Coordination)**
-```
-✅ GOOD: "context-manager: Implement complete user authentication system with JWT, role-based access, password reset, and email verification"
-❌ AVOID: Starting with individual agents for complex multi-domain tasks
-```
-
-### **Clarification Requests**
-```
-✅ GOOD: Accept HALT responses with specific requirements
-✅ GOOD: Provide requested details before proceeding
-❌ AVOID: Pushing agents to guess or assume requirements
-```
-
----
-
-## Philosophy
-
-**This project operates as a coordinated AI team with specialized expertise.** The context-manager serves as the intelligent orchestrator, ensuring efficient collaboration between specialist agents while maintaining context continuity and preventing waste.
-
-**Always prefer precision over speed.** Better to HALT and clarify than to waste tokens on wrong solutions.
-
-**Trust the agent ecosystem.** The context-manager and specialized agents are designed to work together efficiently - let them coordinate rather than trying to manage them manually.

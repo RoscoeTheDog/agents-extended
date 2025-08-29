@@ -1,0 +1,131 @@
+{
+  "project_root": ".",
+  "claude_version": "4.0",
+  "autonomous_permissions": {
+    "file_operations": {
+      "create": true,
+      "read": true,
+      "write": true,
+      "delete": true,
+      "execute": true,
+      "move": true,
+      "copy": true,
+      "modify_permissions": true
+    },
+    "directory_operations": {
+      "create": true,
+      "list": true,
+      "navigate": true,
+      "delete": true,
+      "recursive_operations": true
+    },
+    "context_management": {
+      "create_context_state": true,
+      "write_session_data": true,
+      "create_handoff_files": true,
+      "manage_snapshots": true,
+      "checkpoint_management": true,
+      "session_recovery": true
+    },
+    "development_operations": {
+      "package_installation": true,
+      "script_execution": true,
+      "build_operations": true,
+      "test_execution": true,
+      "git_operations": true,
+      "environment_setup": true
+    },
+    "system_integration": {
+      "external_tool_usage": true,
+      "api_calls": true,
+      "network_operations": true,
+      "database_operations": true
+    }
+  },
+  "security_boundaries": {
+    "scope_restriction": {
+      "enforce_project_boundary": true,
+      "allow_parent_directory_access": false,
+      "allow_absolute_paths_outside_project": false,
+      "require_relative_paths": true,
+      "block_path_traversal": true,
+      "restrict_to_project_root": true
+    },
+    "allowed_path_patterns": [
+      "./*",
+      "./**/*",
+      "./.claude/**/*",
+      "./.*",
+      "!../*",
+      "!../**/*",
+      "!../../**/*",
+      "!/*",
+      "!/**/*",
+      "!/tmp/**/*",
+      "!/var/**/*",
+      "!/home/**/*",
+      "!/Users/**/*",
+      "!/System/**/*",
+      "!/Windows/**/*",
+      "!/C:/**/*",
+      "!/D:/**/*"
+    ],
+    "operation_permissions": {
+      "full_project_access": true,
+      "subdirectory_creation": true,
+      "file_modification_anywhere_in_project": true,
+      "script_execution_in_project": true,
+      "environment_file_access": true,
+      "project_scoped_only": true
+    },
+    "restricted_operations": {
+      "system_file_modification": false,
+      "global_environment_changes": false,
+      "network_server_creation": false,
+      "privileged_system_calls": false,
+      "parent_directory_access": false,
+      "absolute_path_usage": false,
+      "path_traversal_attacks": false,
+      "external_project_access": false
+    }
+  },
+  "agent_behavior": {
+    "operational_mode": {
+      "autonomous_execution": true,
+      "minimal_confirmation_required": true,
+      "proceed_without_explicit_permission": true,
+      "handle_errors_gracefully": true,
+      "adapt_to_project_structure": true
+    },
+    "project_adaptation": {
+      "auto_detect_project_type": true,
+      "use_project_conventions": true,
+      "respect_existing_architecture": true,
+      "maintain_file_structure": true,
+      "preserve_configuration_files": true
+    },
+    "token_optimization": {
+      "use_minimal_context": true,
+      "agent_specific_context_files": true,
+      "sequential_context_passing": true,
+      "compress_handoffs": true,
+      "max_tokens_per_agent": 1000,
+      "context_state_management": true
+    },
+    "development_workflow": {
+      "automatic_dependency_management": true,
+      "intelligent_file_organization": true,
+      "progressive_implementation": true,
+      "iterative_improvement": true,
+      "performance_monitoring": true
+    }
+  },
+  "project_portability": {
+    "generic_configuration": true,
+    "relative_path_usage": true,
+    "environment_agnostic": true,
+    "cross_platform_compatibility": true,
+    "no_hardcoded_project_names": true,
+    "adaptable_to_different_contexts": true
+  }
+}
